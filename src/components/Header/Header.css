@@ -1,0 +1,27 @@
+.header{
+    color: red;
+    border: solid black 1px;
+    height: 20vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+
+.header button{
+    height: 100px;
+    width: 100px;
+}
+
+.logo{
+    border: solid black 1px;
+    height: 50px;
+    width: 100px;
+    margin-left: 20px;
+}
+
+.login{
+    border: solid black 1px;
+    height: 50px;
+    width: 100px;
+    margin-right: 20px;
+}

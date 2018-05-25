@@ -1,14 +1,15 @@
 .header{
     color: red;
     border: solid black 1px;
-    height: 20vh;
+    height: 15%;
     width: 100%;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header button{
-    height: 100px;
+    height: 50px;
     width: 100px;
 }
 

@@ -1,3 +1,3 @@
 select * 
 from users
-where authentication = $1;
+where id = $1;

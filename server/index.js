@@ -44,15 +44,16 @@ passport.use(new Auth0Strategy({
 }, function(accessToken, refreshToken, extraParams, profile, done){
     
     let db = app.get('db');
-    let {id, name} = profile;
+    let {id, name, nickname} = profile;
+
+    console.log(profile)
 
     db.find_user([id]).then(foundUser => {
         if(foundUser[0]){            
-            done(null, foundUser[0].authentication)///2nd param here is the id in serialize user below
+            done(null, foundUser[0].id)///2nd param here is the id in serialize user below
         }else{
-            db.create_user([id, name.givenName]).then(user => {
-                console.log(user)
-                done(null, user[0].authentication)
+            db.create_user([id, name.givenName, nickname]).then(user => {
+                done(null, user[0].id)
             }).catch(e => console.log("error is", e)) 
         }
     }).catch(e => console.log("error is", e))    
@@ -63,6 +64,7 @@ passport.serializeUser(function(id, done){//this puts the id in the session stor
 })
 
 passport.deserializeUser(function(id, done){  
+    console.log("deserialize")
     // app.get('db')///grab everything from db that matches this id////////////////////////////////////////////
     app.get('db').find_user([id]).then(user => {
         done(null, user[0]); 
@@ -81,10 +83,15 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 //put this axios call on the app.js and the .then respons will update the redux store
 ///fire this function in app.js  componentdid mount to check the current user when the app loads then get user 
 app.get('/auth/me', function(req, res){//check to see who is currently logged in
-    
-    // console.log('req.user', req.user);
+    console.log("auth/me")
+
     if(req.user){
-        res.status(200).send(req.user)///this will be the whole user object after deserialize
+        req.app.get('db').get_all_data().then(user => {
+            // res.status(200).send(req.user)
+            res.status(200).send(user)
+        })
+        
+        
     }else{
         res.status(401).send('nice try sucka')
     }
@@ -94,7 +101,7 @@ app.get('/getsomething', function(req, res){
     res.send(req.user)
 })
 
-// app.get('/api/get', controller.apiget)
+app.get('/api/get', controller.apiget)
 
 // app.get('/getuser', function(req, res){
 //     console.log(req.user)
@@ -103,12 +110,3 @@ app.get('/getsomething', function(req, res){
 app.listen(3005, function(){
     console.log("working on 3005");
 })
-
-
-
-
-///I need a session?
-///how to use req.user
-//set up redux just to pass around the user?
-//Do I just store the 3 items in the redux store
-//universal styles

@@ -1,5 +1,5 @@
 insert into users
-(authentication, firstname)
+(id, firstname, username)
 values
-($1, $2)
+($1, $2, $3)
 returning *;

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {input} from '../../ducks/reducer'
 
 export default class Makeoffer extends Component{
-    constructor(){
-        super()
-    }
+    
 
 
     render(){
@@ -17,3 +17,11 @@ export default class Makeoffer extends Component{
         )
     }
 }
+
+function mapStateToProps(state){
+    return{
+        
+    }
+}
+
+ connect(mapStateToProps)(Makeoffer);

@@ -1,23 +1,35 @@
 let initial_state = {
-    //id
-    //username
-    //firstname
+    id: '',
+    username: '',
+    firstname: ''
 }
 
 //action types
-const SOMETHING = 'SOMETHING';
+const USER = 'USER';
+const INPUT = 'INPUT';
 
 export default function reducer(state = initial_state, action){
     switch(action.type){
+        case USER:
+            return Object.assign({}, state, {id: action.payload.id, username: action.payload.username, firstname: action.payload.firstname});
+        case INPUT:
+            return Object.assign({}, state, {username: action.payload})
         default:
-        return state;
+            return state;
     }
 }
 
+// action creators
+export function getUser(value){
+    return{
+        type: USER,
+        payload: value
+    }
+}
 
-//action creators
-// export function something(){
+// export function input(value){
 //     return{
-//         type
+//         type: INPUT,
+//         payload: value
 //     }
 // }
